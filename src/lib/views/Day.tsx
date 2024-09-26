@@ -39,6 +39,9 @@ export interface DayProps {
   headRenderer?(day: Date): JSX.Element;
   hourRenderer?(hour: string): JSX.Element;
   navigation?: boolean;
+  startMinute: number;
+  groupInterval?: number | 0;
+  scrollToCurrentTime?: boolean;
 }
 
 const Day = () => {
@@ -60,11 +63,30 @@ const Day = () => {
     timeZone,
     stickyNavigation,
     agenda,
+    eventWidth,
   } = useStore();
 
-  const { startHour, endHour, step, cellRenderer, headRenderer, hourRenderer } = day!;
-  const START_TIME = set(selectedDate, { hours: startHour, minutes: 0, seconds: 0 });
-  const END_TIME = set(selectedDate, { hours: endHour, minutes: -step, seconds: 0 });
+  const {
+    startHour,
+    endHour,
+    step,
+    cellRenderer,
+    headRenderer,
+    hourRenderer,
+    startMinute,
+    groupInterval,
+    scrollToCurrentTime,
+  } = day!;
+  const START_TIME = set(selectedDate, {
+    hours: startHour,
+    minutes: startMinute < 1 || startMinute > 59 ? 0 : startMinute,
+    seconds: 0,
+  });
+  const END_TIME = set(selectedDate, {
+    hours: endHour !== 24 ? Number(new Date().getHours()) : endHour,
+    minutes: endHour !== 24 ? Number(new Date().getMinutes() + step) : -step,
+    seconds: 0,
+  });
   const hours = eachMinuteOfInterval(
     {
       start: START_TIME,
@@ -148,21 +170,6 @@ const Day = () => {
     const headerHeight = MULTI_DAY_EVENT_HEIGHT * allWeekMulti.length + 45;
     return (
       <>
-        {/* Header */}
-        <TableGrid days={1} sticky="1" stickyNavigation={stickyNavigation}>
-          <span className="rs__cell"></span>
-          <span
-            className={`rs__cell rs__header ${isToday(selectedDate) ? "rs__today_cell" : ""}`}
-            style={{ height: headerHeight }}
-          >
-            {typeof headRenderer === "function" ? (
-              <div>{headRenderer(selectedDate)}</div>
-            ) : (
-              <TodayTypo date={selectedDate} locale={locale} />
-            )}
-            {renderMultiDayEvents(resourcedEvents)}
-          </span>
-        </TableGrid>
         <TableGrid days={1}>
           {/* Body */}
           {hours.map((h, i) => {
@@ -173,13 +180,14 @@ const Day = () => {
               <Fragment key={i}>
                 {/* Time Cells */}
                 <span className="rs__cell rs__header rs__time" style={{ height: CELL_HEIGHT }}>
-                  {typeof hourRenderer === "function" ? (
-                    <div>{hourRenderer(format(h, hFormat, { locale }))}</div>
-                  ) : (
-                    <Typography variant="caption">{format(h, hFormat, { locale })}</Typography>
-                  )}
+                  <Typography variant="caption" id={format(h, hFormat, { locale })}>
+                    {format(h, hFormat, { locale })}
+                  </Typography>
                 </span>
-                <span className={`rs__cell ${isToday(selectedDate) ? "rs__today_cell" : ""}`}>
+                <span
+                  className={`rs__cell ${isToday(selectedDate) ? "rs__today_cell" : ""}`}
+                  id={"rs__today_cell@" + format(h, hFormat, { locale })}
+                >
                   {/* Events of this day - run once on the top hour column */}
                   {i === 0 && (
                     <TodayEvents
@@ -191,6 +199,9 @@ const Day = () => {
                       step={step}
                       direction={direction}
                       timeZone={timeZone}
+                      eventWidth={eventWidth}
+                      groupInterval={groupInterval}
+                      scrollToCurrentTime={scrollToCurrentTime}
                     />
                   )}
                   {/* Cell */}

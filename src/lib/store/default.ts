@@ -109,6 +109,7 @@ export const defaultProps = (props: Partial<SchedulerProps>) => {
     ...Object.assign(
       {
         height: 600,
+        eventWidth: 20,
         navigation: true,
         disableViewNavigator: false,
         events: [],

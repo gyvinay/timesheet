@@ -118,6 +118,7 @@ export const TableGrid = styled("div")<{
     borderColor: theme.palette.grey[300],
     borderWidth: "0 1px 1px 0",
     "&.rs__header": {
+      borderColor: "transparent",
       "& > :first-of-type": {
         padding: "2px 5px",
       },
@@ -142,7 +143,7 @@ export const TableGrid = styled("div")<{
       borderRadius: 0,
       cursor: "pointer",
       "&:hover": {
-        background: alpha(theme.palette.primary.main, 0.1),
+        background: "none !important",
       },
     },
     "& .rs__event__item": {
@@ -177,6 +178,10 @@ export const EventItemPaper = styled(Paper)<{ disabled?: boolean }>(({ disabled 
   display: "block",
   cursor: disabled ? "not-allowed" : "pointer",
   overflow: "hidden",
+  transition: "width 0.3s ease",  // Add a transition for smooth width change
+  "&:hover": {
+    width: "fit-content",               // Change width on hover
+  },
   "& .MuiButtonBase-root": {
     width: "100%",
     height: "100%",
@@ -226,15 +231,8 @@ export const TimeIndicatorBar = styled("div")(({ theme }) => ({
   width: "100%",
   display: "flex",
   "& > div:first-of-type": {
-    height: 12,
-    width: 12,
-    borderRadius: "50%",
-    background: theme.palette.error.light,
-    marginLeft: -6,
-    marginTop: -5,
-  },
-  "& > div:last-of-type": {
-    borderTop: `solid 2px ${theme.palette.error.light}`,
+    borderTop: `solid 2px #FA9C2B`,
     width: "100%",
+    marginLeft: -110,
   },
 }));

@@ -26,6 +26,10 @@ export const StoreProvider = ({ children, initial }: Props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initial.onEventDrop, initial.customEditor, initial.events]);
 
+  useEffect(() => {
+    if (initial.selectedDate) handleGotoDay(initial.selectedDate);
+  }, [initial.selectedDate]);
+
   const handleState = (value: SchedulerState[keyof SchedulerState], name: keyof SchedulerState) => {
     set((prev) => ({ ...prev, [name]: value }));
   };

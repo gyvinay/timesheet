@@ -34,6 +34,7 @@ const Week = () => {
     resourceFields,
     fields,
     agenda,
+    eventWidth,
   } = useStore();
   const { weekStartOn, weekDays, startHour, endHour, step } = week!;
   const _weekStart = startOfWeek(selectedDate, { weekStartsOn: weekStartOn });
@@ -96,6 +97,7 @@ const Week = () => {
         cellHeight={CELL_HEIGHT}
         minutesHeight={MINUTE_HEIGHT}
         daysList={daysList}
+        eventWidth={eventWidth}
       />
     );
   };

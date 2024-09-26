@@ -196,6 +196,7 @@ export interface SchedulerProps {
    * @default 600
    */
   height: number;
+  eventWidth: number;
   /** Initial view to load */
   view: View;
   /**Activate Agenda view */

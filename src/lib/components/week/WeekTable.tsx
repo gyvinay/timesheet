@@ -34,6 +34,7 @@ type Props = {
   minutesHeight: number;
   resource?: DefaultResource;
   resourcedEvents: ProcessedEvent[];
+  eventWidth: number;
 };
 
 const WeekTable = ({
@@ -56,6 +57,7 @@ const WeekTable = ({
     hourFormat,
     timeZone,
     stickyNavigation,
+    eventWidth,
   } = useStore();
   const { startHour, endHour, step, cellRenderer, disableGoToDay, headRenderer, hourRenderer } =
     week!;
@@ -182,6 +184,7 @@ const WeekTable = ({
                       step={step}
                       direction={direction}
                       timeZone={timeZone}
+                      eventWidth={eventWidth}
                     />
                   )}
                   <Cell

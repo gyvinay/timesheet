@@ -58,7 +58,7 @@ const SchedulerComponent = forwardRef<SchedulerRef, unknown>(function SchedulerC
       }}
     >
       {loading ? LoadingComp : null}
-      <Navigation />
+      {/* <Navigation /> */}
       <Table
         resource_count={resourceViewMode === "default" ? resources.length : 1}
         // Temp resources/default `sticky` wontfix
