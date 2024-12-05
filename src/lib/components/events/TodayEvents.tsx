@@ -33,7 +33,7 @@ const TodayEvents = ({
   scrollToCurrentTime,
 }: TodayEventsProps) => {
   const crossingIds: Array<number | string> = [];
-  const [focus, setFocus] = useState(-1);
+  const [focus, setFocus] = useState("-1");
   function groupEventsByApp(events: any[]) {
     let groupedEvents: any[] = [];
     const afkEvents = todayEvents.filter((event) => event.data.status === "afk");
@@ -171,13 +171,13 @@ const TodayEvents = ({
         <div
           key={event.event_id}
           className={`rs__event__item`}
-          onMouseOver={() => setFocus(Number(event.event_id))}
-          onMouseOut={() => setFocus(-1)}
+          onMouseOver={() => setFocus(event.event_id + "")}
+          onMouseOut={() => setFocus("-1")}
           style={{
             minHeight: height_,
             top,
             width: eventWidth + "vh",
-            zIndex: focus === Number(event.event_id) ? 999 : 1,
+            zIndex: focus === event.event_id ? 999 : 1,
             [direction === "rtl" ? "right" : "left"]: i > 0 ? `${i * (eventWidth + 2)}vh` : "",
           }}
         >
