@@ -1,4 +1,4 @@
-import { Paper, alpha, styled } from "@mui/material";
+import { Box, Paper, alpha, styled } from "@mui/material";
 
 export const Wrapper = styled("div")<{ dialog: number }>(({ theme, dialog }) => ({
   position: "relative",
@@ -192,6 +192,15 @@ export const EventItemPaper = styled(Paper)<{ disabled?: boolean }>(({ disabled 
       // padding: "2px 4px",
     },
   },
+}));
+
+export const EventItemBox = styled(Box)<{ disabled?: boolean }>(({ disabled }) => ({
+  borderRadius: "2px",
+  // width: "99.5%",
+  height: "100%",
+  display: "block",
+  cursor: disabled ? "not-allowed" : "pointer",
+
 }));
 
 export const PopperInner = styled("div")(({ theme }) => ({

@@ -4,7 +4,7 @@ import { format } from "date-fns";
 import { ProcessedEvent } from "../../types";
 import ArrowRightRoundedIcon from "@mui/icons-material/ArrowRightRounded";
 import ArrowLeftRoundedIcon from "@mui/icons-material/ArrowLeftRounded";
-import { EventItemPaper } from "../../styles/styles";
+import { EventItemBox, EventItemPaper } from "../../styles/styles";
 import { differenceInDaysOmitTime, getHourFormat } from "../../helpers/generals";
 import useStore from "../../hooks/useStore";
 import useDragAttributes from "../../hooks/useDragAttributes";
@@ -48,9 +48,9 @@ const EventItem = ({ event, multiday, hasPrev, hasNext, showdate = true }: Event
       const custom = eventRenderer({ event, onClick: triggerViewer, ...dragProps });
       if (custom) {
         return (
-          <EventItemPaper key={`${event.start.getTime()}_${event.end.getTime()}_${event.event_id}`}>
+          <EventItemBox key={`${event.start.getTime()}_${event.end.getTime()}_${event.event_id}`}>
             {custom}
-          </EventItemPaper>
+          </EventItemBox>
         );
       }
     }
@@ -114,7 +114,7 @@ const EventItem = ({ event, multiday, hasPrev, hasNext, showdate = true }: Event
           ...(event.sx || {}),
         }}
       >
-        <ButtonBase
+        {/* <ButtonBase
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
@@ -129,11 +129,11 @@ const EventItem = ({ event, multiday, hasPrev, hasNext, showdate = true }: Event
           tabIndex={disableViewer ? -1 : 0}
           disableRipple={disableViewer}
           disabled={event.disabled}
-        >
-          <div {...dragProps} draggable={canDrag}>
-            {item}
-          </div>
-        </ButtonBase>
+        > */}
+        <div {...dragProps} draggable={canDrag}>
+          {item}
+        </div>
+        {/* </ButtonBase> */}
       </EventItemPaper>
     );
     // eslint-disable-next-line

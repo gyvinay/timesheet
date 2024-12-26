@@ -174,7 +174,7 @@ const TodayEvents = ({
           onMouseOver={() => setFocus(event.event_id + "")}
           onMouseOut={() => setFocus("-1")}
           style={{
-            minHeight: height_,
+            height: height_,
             top,
             width: eventWidth + "vh",
             zIndex: focus === event.event_id ? 999 : 1,
